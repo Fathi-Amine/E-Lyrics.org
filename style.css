@@ -1,0 +1,38 @@
+body{
+    margin: 0;
+    display: grid;
+    place-items: center;
+    height: 100vh;
+}
+img{
+    width: 24px;
+    display: block;
+}
+
+h1{
+    margin: 0;
+}
+.dynamicForm{
+    background-color: blanchedalmond;
+}
+
+.form-title{
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.slot{
+    display: block;
+    width: 100%;
+}
+
+.input{
+    margin-top: 1rem;
+}
+.btn{
+    margin-top: 1rem;
+}
+/* .form-title > *{
+    flex-basis: 50%;
+} */
