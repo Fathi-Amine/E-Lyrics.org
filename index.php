@@ -1,5 +1,5 @@
 <?php
-include_once('scripts.php');
+// include_once('scripts.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">

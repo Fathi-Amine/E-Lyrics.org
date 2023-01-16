@@ -52,28 +52,21 @@ addSongBtn.addEventListener('click', ()=>{
         const artistInputs = dataElements[i].querySelector('#artistInput');
         const albumInputs = dataElements[i].querySelector('#albumInput');
         const lyricsInputs = dataElements[i].querySelector('#lyricsText');
-        // console.log(titleInputs)
-        // console.log(artistInputs)
-        // console.log(albumInputs)
-        // console.log(lyricsInputs)
         const song = {};
         song.title = titleInputs.value;
         song.artist = artistInputs.value;
         song.album = albumInputs.value;
         song.lyrics = lyricsInputs.value;
         console.log(song)
-        // for (var j = 0; j < inputs.length; j++) {
-        //     rowData[inputs[j].name] = inputs[j].value;
-        // }
         data.push(song);
     }
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "scripts.php", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             console.log(xhr.responseText);
         }
     };
-    xhr.send(JSON.stringify({songs: data}));
+    xhr.send(`songs=${JSON.stringify({songs: data})}`);
 })
