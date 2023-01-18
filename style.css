@@ -36,3 +36,8 @@ h1{
 /* .form-title > *{
     flex-basis: 50%;
 } */
+
+.album-card:hover{
+    /* border: 1px solid black; */
+    cursor: pointer;
+}

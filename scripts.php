@@ -1,8 +1,12 @@
 <?php
 include_once("classes/songs.php");
 include_once("classes/artist.php");
+include_once("classes/album.php");
 if(isset($_GET["data"]) && $_GET['data'] == 'artist'){
     echo json_encode(getArtists());
+};
+if(isset($_GET["data"]) && $_GET['data'] == 'albums'){
+    echo json_encode(getAlbums());
 };
 if(isset($_POST["songs"])){
     json_encode(response($_POST["songs"]));
@@ -14,6 +18,12 @@ if(isset($_POST["artist"])){
 
 if(isset($_POST["artistUpdate"])){
     json_encode(updateArtist($_POST["artistUpdate"]));
+}
+if(isset($_POST["artistDelete"])){
+    json_encode(deleteArtist($_POST["artistDelete"]));
+}
+if(isset($_POST["album"])){
+    json_encode(addAlbum($_POST["album"]));
 }
 
 function response($data){
@@ -54,4 +64,24 @@ function updateArtist($data){
     $artistToUpdate->updateArtist($artist["id"],$artist["name"]);
 }
 
+function deleteArtist($data){
+    $artist = json_decode($data,true);
+    $artistToDelete = new Artist();
+    $artistToDelete->deleteArtist($artist["id"]);
+}
+
+function addAlbum($data){
+    $albumInfo = json_decode($data,true);
+    var_dump($albumInfo);
+    die();
+    // $album = new Album();
+    // $album->insertAlbum($albumInfo);
+    // var_dump($data);
+    // die();
+}
+
+function getAlbums(){
+    $albums = new Album();
+    return $albums->retrieveAlbums();
+}
 ?>

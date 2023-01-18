@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 18, 2023 at 05:18 PM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 8.1.10
+-- Generation Time: Jan 19, 2023 at 12:56 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,10 +29,17 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `album` (
   `id_album` int(11) NOT NULL,
-  `name` int(11) NOT NULL,
+  `name` varchar(512) NOT NULL,
   `release_date` date NOT NULL,
   `artist_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `album`
+--
+
+INSERT INTO `album` (`id_album`, `name`, `release_date`, `artist_id`) VALUES
+(1, '0', '2022-09-13', 3);
 
 -- --------------------------------------------------------
 
@@ -42,7 +49,7 @@ CREATE TABLE `album` (
 
 CREATE TABLE `artist` (
   `id_artist` int(11) NOT NULL,
-  `name` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL
+  `name` varchar(512) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -51,7 +58,7 @@ CREATE TABLE `artist` (
 
 INSERT INTO `artist` (`id_artist`, `name`) VALUES
 (1, 'dsfs'),
-(2, 'sfvsd');
+(3, 'Drake');
 
 -- --------------------------------------------------------
 
@@ -61,10 +68,10 @@ INSERT INTO `artist` (`id_artist`, `name`) VALUES
 
 CREATE TABLE `song` (
   `id` int(11) NOT NULL,
-  `title` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `artist` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `album` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lyrics` text COLLATE utf8mb4_unicode_ci NOT NULL
+  `title` varchar(512) NOT NULL,
+  `artist` varchar(512) NOT NULL,
+  `album` varchar(512) NOT NULL,
+  `lyrics` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -133,13 +140,13 @@ ALTER TABLE `song`
 -- AUTO_INCREMENT for table `album`
 --
 ALTER TABLE `album`
-  MODIFY `id_album` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_album` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `artist`
 --
 ALTER TABLE `artist`
-  MODIFY `id_artist` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_artist` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `song`

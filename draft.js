@@ -7,6 +7,16 @@ const deleteArtistBtn = document.querySelector('.deleteArtist');
 const readBlock = document.querySelector('.show');
 const artist = document.querySelector('#artistInput');
 const artistId = document.querySelector('#artistId');
+const albumIdInput = document.querySelector('albumId');
+const albumNameInput = document.querySelector('.albumName');
+const albumDateInput = document.querySelector('.albumDate');
+const albumArtistInput = document.querySelector('.selectBox');
+const addAlbumBtn = document.querySelector('.addAlbumBtn');
+const showAlbumsBtn = document.querySelector('.showAlbumsBtn');
+const updateAlbumBtn = document.querySelector('.updateAlbumBtn');
+const deleteAlbumBtn = document.querySelector('.deleteAlbumBtn');
+const albumBlock = document.querySelector('.albumBlock');
+var selectedOptionValue = 0;
 // const closeBtns = document.querySelectorAll('.close-btn');
 // console.log(closeBtns)
 const form = document.querySelector('.lyrics-form');
@@ -83,66 +93,178 @@ const form = document.querySelector('.lyrics-form');
 // })
 
 
-addArtistBtn.addEventListener('click', function(){
-    const artist = document.querySelector('#artistInput');
-    const artistName = artist.value;
-    console.log(artistName)
-    const artistXhr = new XMLHttpRequest();
-    artistXhr.open("POST", "scripts.php",true);
-    artistXhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-    artistXhr.onreadystatechange = function () {
-        if (artistXhr.readyState === 4 && artistXhr.status === 200) {
-            console.log(artistXhr.responseText);
-            // if(artistXhr.responseText){
-            //     console.log("yeap")
-            // }else{
-            //     console.log("nope")
-            // };
-        }
-    }
-    artistXhr.send(`artist=${artistName}`);
-})
-function edit(btn){
+// addArtistBtn.addEventListener('click', function(){
+//     const artist = document.querySelector('#artistInput');
+//     const artistName = artist.value;
+//     console.log(artistName)
+//     const artistXhr = new XMLHttpRequest();
+//     artistXhr.open("POST", "scripts.php",true);
+//     artistXhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+//     artistXhr.onreadystatechange = function () {
+//         if (artistXhr.readyState === 4 && artistXhr.status === 200) {
+//             console.log(artistXhr.responseText);
+//             // if(artistXhr.responseText){
+//             //     console.log("yeap")
+//             // }else{
+//             //     console.log("nope")
+//             // };
+//         }
+//     }
+//     artistXhr.send(`artist=${artistName}`);
+// })
+// function edit(btn){
     
-    const btnId = btn.id.split('-')[1];
-    artistId.value = btnId;
-    artist.value = btn.innerText;
-}
-function showArtists(art){
-    art.forEach(artist => {
-        readBlock.innerHTML += 
-        `
-        <button id='artist-${artist.id_artist}' class="updateArtist" onclick=edit(this)>${artist.name}</button>
+//     const btnId = btn.id.split('-')[1];
+//     artistId.value = btnId;
+//     artist.value = btn.innerText;
+// }
+// function showArtists(art){
+//     art.forEach(artist => {
+//         readBlock.innerHTML += 
+//         `
+//         <button id='artist-${artist.id_artist}' class="updateArtist" onclick=edit(this)>${artist.name}</button>
 
-        `
+//         `
         
-    });
+//     });
+// }
+function editAlbum(element){
+    console.log(element.children)
+    Array.from(element.children).forEach(child=>{
+        if(child.classList.contains("album-title")){
+            console.log(child)
+
+        }
+        
+    })
 }
-readArtistBtn.addEventListener('click', function(){
+function displayAlbums(albums){
+    albums.forEach(album=>{
+        albumBlock.innerHTML +=
+        `
+        <div class="album-card" id=album-${album.id_album} onclick="editAlbum(this)">
+            <p class="album-title">${album.name}</p>
+            <p class="album-date">${album.release_date}</p>
+            <p class="album-artist">${album.artist_name}</p>
+        </div>
+        `
+    })
+}
+// readArtistBtn.addEventListener('click', function(){
+//     const artistXhr = new XMLHttpRequest();
+//     artistXhr.open("GET","scripts.php?data=artist",true);
+//     artistXhr.onload = function() {
+//         if (artistXhr.status === 200) {
+//             let artists = JSON.parse(this.responseText);
+//             let values = Object.values(artists);
+//             showArtists(values);
+//         }
+//     };
+//     artistXhr.send();
+// })
+
+// updateArtistBtn.addEventListener('click',function(){
+//     const updateArtist = {}
+//     updateArtist.id = artistId.value;
+//     updateArtist.name = artist.value;
+//     console.log(updateArtist);
+//     const artistXhr = new XMLHttpRequest();
+//     artistXhr.open("POST","scripts.php",true);
+//     artistXhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+//     artistXhr.onreadystatechange = function() {
+//         if (artistXhr.readyState === 4 && artistXhr.status === 200) {
+//             console.log(this.responseText);
+//         }
+//     };
+//     artistXhr.send(`artistUpdate=${JSON.stringify(updateArtist)}`);
+// })
+
+// deleteArtistBtn.addEventListener('click',function(){
+//     const deleteArtist = {};
+//     deleteArtist.id = artistId.value;
+//     const artistXhr = new XMLHttpRequest();
+//     artistXhr.open("POST","scripts.php",true);
+//     artistXhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+//     artistXhr.onreadystatechange = function() {
+//         if (artistXhr.readyState === 4 && artistXhr.status === 200) {
+//             console.log(this.responseText);
+//         }
+//     };
+//     artistXhr.send(`artistDelete=${JSON.stringify(deleteArtist)}`);
+// })
+
+function custonSelectBox(){
     const artistXhr = new XMLHttpRequest();
     artistXhr.open("GET","scripts.php?data=artist",true);
     artistXhr.onload = function() {
         if (artistXhr.status === 200) {
             let artists = JSON.parse(this.responseText);
             let values = Object.values(artists);
-            showArtists(values);
+            const selectInput = document.createElement('select');
+            const defaultOption = document.createElement('option');
+            defaultOption.innerText = 'Select an Artist';
+            defaultOption.setAttribute('selected',"");
+            selectInput.appendChild(defaultOption)
+            values.forEach(artist=>{
+                const selectOption = document.createElement('option');
+                selectOption.innerText = artist.name;
+                selectOption.setAttribute('value', `${artist.id_artist}`)
+                selectOption.classList = 'option';
+                selectInput.appendChild(selectOption);
+                console.log(artist)
+            })
+            selectInput.addEventListener('change', function(){
+                selectedOptionValue = selectInput.value;
+                console.log(selectedOptionValue)
+            })
+            // const options = selectInput.querySelectorAll('.option');
+            // options.forEach(option=>{
+            //     console.log(option)
+            // })
+            console.log(selectInput);
+            albumArtistInput.appendChild(selectInput)
         }
     };
     artistXhr.send();
+}
+custonSelectBox();
+
+addAlbumBtn.addEventListener('click',function(){
+    console.log(addAlbumBtn);
+    const albumInfo = {}
+    const albumName = albumNameInput.value;
+    const albumDate = albumDateInput.value;
+    albumInfo.name = albumName;
+    albumInfo.date = albumDate;
+    albumInfo.artistId = selectedOptionValue;
+    console.log(selectedOptionValue)
+    const albumXhr = new XMLHttpRequest();
+    albumXhr.open("POST", "scripts.php",true);
+    albumXhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+    albumXhr.onreadystatechange = function () {
+        if (albumXhr.readyState === 4 && albumXhr.status === 200) {
+            console.log(albumXhr.responseText);
+            // if(albumXhr.responseText){
+            //     console.log("yeap")
+            // }else{
+            //     console.log("nope")
+            // };
+        }
+    }
+    albumXhr.send(`album=${JSON.stringify(albumInfo)}`);
 })
 
-updateArtistBtn.addEventListener('click',function(){
-    const updateArtist = {}
-    updateArtist.id = artistId.value;
-    updateArtist.name = artist.value;
-    console.log(updateArtist);
-    const artistXhr = new XMLHttpRequest();
-    artistXhr.open("POST","scripts.php",true);
-    artistXhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-    artistXhr.onreadystatechange = function() {
-        if (artistXhr.readyState === 4 && artistXhr.status === 200) {
-            console.log(this.responseText);
+showAlbumsBtn.addEventListener('click',function(){
+    console.log(showAlbumsBtn)
+        const albumXhr = new XMLHttpRequest();
+    albumXhr.open("GET","scripts.php?data=albums",true);
+    albumXhr.onload = function() {
+        if (albumXhr.status === 200) {
+            let albums = JSON.parse(this.responseText);
+            console.log(albums)
+            let values = Object.values(albums);
+            displayAlbums(values)
         }
     };
-    artistXhr.send(`artistUpdate=${JSON.stringify(updateArtist)}`);
+    albumXhr.send();
 })

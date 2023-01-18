@@ -56,4 +56,16 @@ class Artist extends DatabaseConnection
         $statement->bindParam(':id', $id);
         $statement->execute();
     }
+
+    public function deleteArtist($id){
+        $this->setArtistId($id);
+        $id = $this->getArtistId();
+        $db = new DatabaseConnection();
+        $pdo = $db -> connect();
+        $sql = "DELETE FROM `artist` WHERE id_artist = :id";
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(':id', $id);
+        $statement->execute();
+    }
+
 }

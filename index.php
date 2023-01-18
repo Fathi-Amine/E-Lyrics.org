@@ -11,7 +11,31 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="crud-artist">
+    <div class="albumBlock"></div>
+    <div class="crud-album">
+        <div class="input-container">
+            <input type="hidden" class="albumId">
+        </div>
+        <div class="input-container">
+            <label for="">Name</label>
+            <input type="text" class="albumName">
+        </div>
+        <div class="input-container">
+            <label for="">Release Date</label>
+            <input type="date" class="albumDate">
+        </div>
+        <div class="input-container selectBox">
+            <label for="">Artist</label>
+            <!-- <input type="text"> -->
+        </div>
+        <div class="btns">
+            <button class="addAlbumBtn">add album</button>
+            <button class="showAlbumsBtn">show Albums</button>
+            <button class="updateAlbumBtn">update Album</button>
+            <button class="deleteAlbumBtn"> delete Album</button>
+        </div>
+    </div>
+    <!-- <div class="crud-artist">
         <div class="show"></div>
         <div class="artist-input">
             <label for="" style="display: block;">
@@ -26,7 +50,7 @@
                 <button class="deleteArtist">Delete</button>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- <div class="dynamicForm">
         <form action="" class="lyrics-form">
             <div class="song-inputs">
