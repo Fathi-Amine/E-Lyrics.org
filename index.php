@@ -11,7 +11,23 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="dynamicForm">
+    <div class="crud-artist">
+        <div class="show"></div>
+        <div class="artist-input">
+            <label for="" style="display: block;">
+                Artist
+            </label>
+            <input type="hidden" id="artistId">
+            <input type="text" name="" id="artistInput">
+            <div class="btnContainer">
+                <button class="addArtist">Add</button>
+                <button class="readArtist">Retrieve</button>
+                <button class="updateArtist">Update</button>
+                <button class="deleteArtist">Delete</button>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="dynamicForm">
         <form action="" class="lyrics-form">
             <div class="song-inputs">
                 <div class="form-title">
@@ -44,6 +60,6 @@
         </form>
         <button type="button" class="btn">Add song</button>
         <button class="addSongBlock">Add another song</button>
-    </div>
+    </div> -->
     <script src="draft.js"></script>
 </html>

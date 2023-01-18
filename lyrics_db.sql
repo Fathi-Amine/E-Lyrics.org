@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2023 at 07:56 PM
+-- Generation Time: Jan 18, 2023 at 05:18 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -24,6 +24,19 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `album`
+--
+
+CREATE TABLE `album` (
+  `id_album` int(11) NOT NULL,
+  `name` int(11) NOT NULL,
+  `release_date` date NOT NULL,
+  `artist_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `artist`
 --
 
@@ -31,6 +44,14 @@ CREATE TABLE `artist` (
   `id_artist` int(11) NOT NULL,
   `name` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `artist`
+--
+
+INSERT INTO `artist` (`id_artist`, `name`) VALUES
+(1, 'dsfs'),
+(2, 'sfvsd');
 
 -- --------------------------------------------------------
 
@@ -86,6 +107,13 @@ INSERT INTO `song` (`id`, `title`, `artist`, `album`, `lyrics`) VALUES
 --
 
 --
+-- Indexes for table `album`
+--
+ALTER TABLE `album`
+  ADD PRIMARY KEY (`id_album`),
+  ADD KEY `artist_id` (`artist_id`);
+
+--
 -- Indexes for table `artist`
 --
 ALTER TABLE `artist`
@@ -102,16 +130,32 @@ ALTER TABLE `song`
 --
 
 --
+-- AUTO_INCREMENT for table `album`
+--
+ALTER TABLE `album`
+  MODIFY `id_album` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `artist`
 --
 ALTER TABLE `artist`
-  MODIFY `id_artist` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_artist` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `song`
 --
 ALTER TABLE `song`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `album`
+--
+ALTER TABLE `album`
+  ADD CONSTRAINT `album_ibfk_1` FOREIGN KEY (`artist_id`) REFERENCES `artist` (`id_artist`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
