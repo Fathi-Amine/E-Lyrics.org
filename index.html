@@ -2,7 +2,7 @@
 // include_once('scripts.php');
 ?> -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,9 +12,9 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="bg-white dar:bg-gray-900">
-        <aside class="bg-white dark:bg-gray-900 fixed overflow-hidden left-0 top-0 z-10 h-screen w-[calc(3.73rem)] border-r border-gray-300/40 dark:border-gray-700 hover:w-56 hover:shadow-2xl">
-            <div class="flex flex-col justify-between">
+    <div class="bg-white dark:bg-gray-900">
+        <aside class="compact-nav transition-width duration-300 bg-white dark:bg-gray-900 fixed group overflow-hidden left-0 top-0 z-10 h-screen w-[calc(3.73rem)] border-r border-gray-300/40 dark:border-gray-700 hover:w-56 hover:shadow-2xl">
+            <div class="h-full flex flex-col justify-between">
                 <div>
                     <div class="h-16 border-b border-gray300/40 dark:border-gray-700 flex items-center">
                         <a href="#" class="block w-max px-2.5">
@@ -22,7 +22,7 @@
                         </a>
                     </div>
                     <div class="mt-6">
-                        <ul class="px-1 -ml-px font-medium tracking-wide">
+                        <ul class="px-1 -ml-px space-y-4 font-medium tracking-wide">
                             <li class="w-max space-y-4 group-hover:w-full">
                                 <a href="" class="block py-3 w-[52px] rounded-full bg-sky-500 group-hover:w-full">
                                     <div class="w-max flex px-4 gap-4">
@@ -31,8 +31,28 @@
                                     </div>
                                 </a>
                             </li>
+                            <li class="w-max">
+                                <a href="">
+                                    <div class="flex items-center gap-4 px-4 py-3">
+                                        <span class="text-gray-600 dark:text-gray-300">OO</span>
+                                    </div>
+                                </a>
+                            </li>
                         </ul>
                     </div>
+                </div>
+                <div class="py-4 px-2 border-t border-gray-300/40 dark:border-gray-700">
+                    <a href="">
+                        <div class="flex items-center gap-4">
+                            <img class="w-12 h-12 font-medium rounded-full" src="assets/close.svg" alt="">
+                            <div>
+                                <h6 class="text-gray-600 dark:text-gray-200">
+                                    jamal sakim
+                                </h6>
+                                <span class=" -mt-0.5 text-xs">fullstack developer</span>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </aside>
