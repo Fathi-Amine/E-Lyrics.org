@@ -26,6 +26,10 @@ if(isset($_POST["album"])){
     json_encode(addAlbum($_POST["album"]));
 }
 
+if(isset($_POST["albumUpdate"])){
+    json_encode(updateAlbum($_POST["albumUpdate"]));
+}
+
 function response($data){
     if(Songs::insertSongs($data)){
         echo true;
@@ -83,5 +87,18 @@ function addAlbum($data){
 function getAlbums(){
     $albums = new Album();
     return $albums->retrieveAlbums();
+}
+
+function updateAlbum($data){
+    $album = json_decode($data,true);
+    $albumUpdate = new Album();
+    $albumUpdate->albumUp($album);
+
+}
+
+function deleteAlbum($id){
+    $album = json_decode($id,true);
+    $albumToDelete = new Album();
+    $albumToDelete->deleteAlbums($album["id"]);
 }
 ?>

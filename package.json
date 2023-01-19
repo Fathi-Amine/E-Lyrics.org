@@ -1,0 +1,24 @@
+{
+  "name": "e-lyrics.org",
+  "version": "1.0.0",
+  "description": "",
+  "main": "draft.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "tailwindcss -i ./assets/style.css -o ./dist/output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fathi-Amine/E-Lyrics.org.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Fathi-Amine/E-Lyrics.org/issues"
+  },
+  "homepage": "https://github.com/Fathi-Amine/E-Lyrics.org#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.2.4"
+  }
+}

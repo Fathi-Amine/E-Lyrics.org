@@ -66,5 +66,36 @@ class Album extends DatabaseConnection
         $res = $statement->fetchAll();
         return $res;
     }
+
+    public function albumUp($data){
+        $this->setAlbumId($data["id"]);
+        $this->setAlbumName($data["name"]);
+        $this->setAlbumDate($data["date"]);
+        $this->setAlbumArtist($data["artistId"]);
+        $albumId = $this->getAlbumId();
+        $albumName = $this->getAlbumName();
+        $albumDate = $this->getAlbumDate();
+        $albumArtist = $this->getAlbumArtist();
+        $db = new DatabaseConnection();
+        $pdo = $db -> connect();
+        $sql = "UPDATE `album` SET name =:name,release_date = :release_date,artist_id = :artist_id WHERE id_album = :id";
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(':id', $albumId);
+        $statement->bindParam(':name', $albumName);
+        $statement->bindParam(':release_date', $albumDate);
+        $statement->bindParam(':artist_id', $albumArtist);
+        $statement->execute();
+    }
+
+    public function deleteAlbums($id){
+        $this->setAlbumId($id);
+        $id = $this->getAlbumId();
+        $db = new DatabaseConnection();
+        $pdo = $db -> connect();
+        $sql = "DELETE FROM `album` WHERE id_album = :id";
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(':id', $id);
+        $statement->execute();
+    }
 }
 ?>

@@ -1,4 +1,4 @@
-body{
+/* body{
     margin: 0;
     display: grid;
     place-items: center;
@@ -37,7 +37,7 @@ h1{
     flex-basis: 50%;
 } */
 
-.album-card:hover{
-    /* border: 1px solid black; */
+/* .album-card:hover{
+    /* border: 1px solid black; 
     cursor: pointer;
-}
+} */ 
