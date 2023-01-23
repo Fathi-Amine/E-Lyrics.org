@@ -2,6 +2,7 @@ const addBtn = document.querySelector('.addSongBlock');
 const addSongBtn = document.querySelector('.btn');
 const songsTableBody = document.querySelector('.songsTableBody');
 const albumsTableBody = document.querySelector('.albumsTableBody');
+const artistsTableBody = document.querySelector('.artistsTableBody');
 console.log(songsTableBody)
 const addArtistBtn = document.querySelector('.addArtist');
 const readArtistBtn = document.querySelector('.readArtist');
@@ -390,6 +391,29 @@ function showAlbumsTable(){
     albumXhr.send();
 }
 showAlbumsTable();
+function showArtists(artists) {
+    console.log(artists)
+    artists.forEach(artist=>{
+        let artistName = document.createElement('td');
+        artistName.dataset.id = artist.id_artist;
+        artistName.innerText = artist.name;
+        artistName.classList.add("artist-name,text-center");
+        artistsTableBody.append(artistName)
+
+    })
+}
+function showArtist(){
+    const artistXhr = new XMLHttpRequest();
+    artistXhr.open("GET","scripts.php?data=artist",true);
+    artistXhr.onload = function() {
+        if (artistXhr.status === 200) {
+            let artists = JSON.parse(this.responseText);
+            let values = Object.values(artists);
+            showArtists(values);
+        }
+    };
+    artistXhr.send();
+}
 // addAlbumBtn.addEventListener('click',function(){
 //     console.log(addAlbumBtn);
 //     const albumInfo = {}

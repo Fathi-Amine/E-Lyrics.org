@@ -105,6 +105,18 @@
                             <tr class="albumsTableBody"></tr>
                         </tbody>
                 </div>
+
+                <div id="artistsTable" class="px-6 lg:px-12">
+                    <table id="artists" class="w-full">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="artistsTableBody"></tr>
+                        </tbody>
+                </div>
             </div>
 
             
@@ -270,13 +282,19 @@
     
     <script>
     let songsTable = document.getElementById('songs');
-    let albumsTable = document.getElementById('albums')
+    let albumsTable = document.getElementById('albums');
+    let artistTable = document.getElementById('artists')
     $(document).ready(function() {
         $(songsTable).dataTable({
             searching: true,
             paging: true
         });
         $(albumsTable).dataTable({
+            searching: true,
+            paging: true
+        })
+
+        $(artistTable).dataTable({
             searching: true,
             paging: true
         })
