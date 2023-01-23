@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
     <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.min.css" rel="stylesheet" /> -->
     <link rel="stylesheet" href="./dist/output.css">
     <!-- Begin Flowbite css -->
@@ -76,8 +77,37 @@
                         <span class="text-gray-500 dark:text-gray-200">Content</span>
                     </div>
                 </div>
-                
+                <div id="songsTable" class="px-6 lg:px-12">
+                    <table id="songs" class="w-full">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Lyrics</th>
+                                <th>Artist</th>
+                                <th>Album</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="songsTableBody"></tr>
+                        </tbody>
+                </div>
+
+                <div id="albumsTable" class="px-6 lg:px-12">
+                    <table id="albums" class="w-full">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Release Date</th>
+                                <th>Artist</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="albumsTableBody"></tr>
+                        </tbody>
+                </div>
             </div>
+
+            
         </main>
         
         <div id="modal" tabindex="-1" class="hidden bg-slate-900 absolute z-50 top-0 left-0 min-h-screen w-full flex items-center justify-center bg-opacity-75 p-3">
@@ -96,12 +126,14 @@
                         <input type="text" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="titleInput">
                     </div>
                     <div class="input">
-                        <label for="" class="block">Artist</label>
-                        <input type="text" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="artistInput">
+                        <label for="selectArtist" class="block">Artist</label>
+                        <!-- <input type="text" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="artistInput"> -->
+                        <select class="slot w-full border border-gray-300 rounded-lg h-10 p-2" id="selectArtist"></select>
                     </div>
                     <div class="input">
                         <label for="" class="block">Album</label>
-                        <input type="text" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="albumInput">
+                        <!-- <input type="text" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="albumInput"> -->
+                        <select class="slot w-full border border-gray-300 rounded-lg h-10 p-2" id="selectAlbum"></select>
                     </div>
                     <div class="input">
                         <label for="" class="block">Lyrics</label>
@@ -233,9 +265,22 @@
         </div>
       </div> -->
     <script src="draft.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+    
     <script>
-      
-
+    let songsTable = document.getElementById('songs');
+    let albumsTable = document.getElementById('albums')
+    $(document).ready(function() {
+        $(songsTable).dataTable({
+            searching: true,
+            paging: true
+        });
+        $(albumsTable).dataTable({
+            searching: true,
+            paging: true
+        })
+    } );
     </script>
 </body>
 </html>

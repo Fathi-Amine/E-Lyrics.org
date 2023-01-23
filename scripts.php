@@ -30,6 +30,9 @@ if(isset($_POST["albumUpdate"])){
     json_encode(updateAlbum($_POST["albumUpdate"]));
 }
 
+if(isset($_GET["data"]) && $_GET['data'] == 'songs'){
+    echo json_encode(getSongs());
+}
 function response($data){
     if(Songs::insertSongs($data)){
         echo true;
@@ -50,12 +53,16 @@ function response($data){
     // die();
 }
 
+function getSongs(){
+    return Songs::showSongs();
+}
 function insertArtist($data){
     $artist = new Artist();
     $artist->addArtist($data);
     // var_dump($artist);
     // die;
 }
+
 
 function getArtists(){
     $artists = new Artist();

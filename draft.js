@@ -1,5 +1,8 @@
 const addBtn = document.querySelector('.addSongBlock');
 const addSongBtn = document.querySelector('.btn');
+const songsTableBody = document.querySelector('.songsTableBody');
+const albumsTableBody = document.querySelector('.albumsTableBody');
+console.log(songsTableBody)
 const addArtistBtn = document.querySelector('.addArtist');
 const readArtistBtn = document.querySelector('.readArtist');
 const updateArtistBtn = document.querySelector('.updateArtist');
@@ -20,14 +23,17 @@ var selectedOptionValue = 0;
 // const closeBtns = document.querySelectorAll('.close-btn');
 // console.log(closeBtns)
 let duplicateCount = 0;
-const formParent = 
+const formParent = document.querySelector('.songFormBlock');
 const form = document.querySelector('.song-inputs');
 
+function pLimit(str, length, end = "..."){
+    return str.length < length ? str : str.substring(0, length) + end;
+}
 function insertForm(){
     duplicateCount++;
-    let insertedForm = form.;
+    let insertedForm = form.cloneNode(true);
     insertedForm.id = "insertedForm"+duplicateCount;
-    form.appendChild(insertedForm);
+    console.log(form.parentElement.appendChild(insertedForm))
 }
 
 
@@ -81,6 +87,10 @@ closeModalBtn.addEventListener("click", function() {
     if (!modalHidden) {
         modal.classList.add("hidden");
         modalHidden = true;
+    }
+    for(i=1;i<=duplicateCount;i++){
+        let insertedForm = document.querySelector(`#insertedForm${i}`);
+        insertedForm.parentElement.removeChild(insertedForm)
     }
 });
 
@@ -244,42 +254,142 @@ document.addEventListener("click", function(event) {
 //     artistXhr.send(`artistDelete=${JSON.stringify(deleteArtist)}`);
 // })
 
-// function custonSelectBox(){
-//     const artistXhr = new XMLHttpRequest();
-//     artistXhr.open("GET","scripts.php?data=artist",true);
-//     artistXhr.onload = function() {
-//         if (artistXhr.status === 200) {
-//             let artists = JSON.parse(this.responseText);
-//             let values = Object.values(artists);
-//             const selectInput = document.createElement('select');
-//             const defaultOption = document.createElement('option');
-//             defaultOption.innerText = 'Select an Artist';
-//             defaultOption.setAttribute('selected',"");
-//             selectInput.appendChild(defaultOption)
-//             values.forEach(artist=>{
-//                 const selectOption = document.createElement('option');
-//                 selectOption.innerText = artist.name;
-//                 selectOption.setAttribute('value', `${artist.id_artist}`)
-//                 selectOption.classList = 'option';
-//                 selectInput.appendChild(selectOption);
-//                 console.log(artist)
-//             })
-//             selectInput.addEventListener('change', function(){
-//                 selectedOptionValue = selectInput.value;
-//                 console.log(selectedOptionValue)
-//             })
-//             // const options = selectInput.querySelectorAll('.option');
-//             // options.forEach(option=>{
-//             //     console.log(option)
-//             // })
-//             console.log(selectInput);
-//             albumArtistInput.appendChild(selectInput)
-//         }
-//     };
-//     artistXhr.send();
-// }
-// custonSelectBox();
+function custonSelectBox(){
+    const artistXhr = new XMLHttpRequest();
+    artistXhr.open("GET","scripts.php?data=artist",true);
+    artistXhr.onload = function() {
+        if (artistXhr.status === 200) {
+            let artists = JSON.parse(this.responseText);
+            let values = Object.values(artists);
+            // const selectInput = document.createElement('select');
+            const selectInput = document.querySelector('#selectArtist')
+            const defaultOption = document.createElement('option');
+            defaultOption.innerText = 'Select an Artist';
+            defaultOption.setAttribute('selected',"");
+            selectInput.appendChild(defaultOption)
+            values.forEach(artist=>{
+                const selectOption = document.createElement('option');
+                selectOption.innerText = artist.name;
+                selectOption.setAttribute('value', `${artist.id_artist}`)
+                selectOption.classList = 'option';
+                selectInput.appendChild(selectOption);
+                console.log(artist)
+            })
+            selectInput.addEventListener('change', function(){
+                selectedOptionValue = selectInput.value;
+                console.log(selectedOptionValue);
+                const albumXhr = new XMLHttpRequest();
+                albumXhr.open("GET","scripts.php?data=albums",true);
+                albumXhr.onload = function() {
+                    if (albumXhr.status === 200) {
+                        let albums = JSON.parse(this.responseText);
+                        console.log(albums)
+                        let values = Object.values(albums);
+                        console.log(values)
+                        const selectAlbumInput = document.querySelector('#selectAlbum');
+                        const defaultAlbumOption = document.createElement('option');
+                        defaultAlbumOption.innerText = 'Select an album';
+                        defaultAlbumOption.setAttribute('selected', "");
+                        selectAlbumInput.appendChild(defaultAlbumOption);
+                        values.forEach(album =>{
+                            const selectAlbumOption = document.createElement('option');
+                            selectAlbumOption.innerText = album.name;
+                            selectAlbumOption.setAttribute('value', `${album.id_album}`);
+                            selectAlbumOption.classList= 'albumOption';
+                            selectAlbumInput.appendChild(selectAlbumOption);
+                        })
+                    }
+                };
+                albumXhr.send();
+            })
+            // const options = selectInput.querySelectorAll('.option');
+            // options.forEach(option=>{
+            //     console.log(option)
+            // })
+            console.log(selectInput);
+            // albumArtistInput.appendChild(selectInput)
+        }
+    };
+    artistXhr.send();
+}
+custonSelectBox();
+function displaySongs(songs){
+    songs.forEach(song=>{
+        let songTitle = document.createElement('td');
+        let songLyrics = document.createElement('td');
+        let songAlbum = document.createElement('td');
+        let songArtist = document.createElement('td');
+        songTitle.classList.add("songTitle,text-center");
+        songLyrics.classList.add("songTitle,text-center");
+        songAlbum.classList.add("songTitle,text-center");
+        songArtist.classList.add("songTitle,text-center");
+        songTitle.dataset.id = song.id;
+        songTitle.innerText = song.title;
+        songLyrics.innerText = pLimit(song.lyrics,15);
+        songAlbum.innerText = song.album_name;
+        songArtist.innerText = song.artist_name;
+        songsTableBody.append(songTitle,songLyrics,songAlbum,songArtist)
+        // songsTableBody.innerHTML += 
+        // `
+        //     <td class='songTitle text-center' data-songsId=${song.id}>${song.title}</td>
+        //     <td  class='songLyrics text-center'>${pLimit(song.lyrics,15)}</td>
+        //     <td class="songAlbum text-center">${song.album_name}</td>
+        //     <td class="songArtist text-center">${song.artist_name}</td>
+        //     <!-- btn edite delete -->
+        //     <td>
+        //         <div class="d-flex align-items-center">
+        //             <button>edit</button>
+        //             <button></button>
+        //         </div>
+        //     </td>
+        // `
+    })
+}
+function showSongsTable(){
+    const songsXhr = new XMLHttpRequest();
+    songsXhr.open("GET","scripts.php?data=songs",true);
+    songsXhr.onload = function() {
+        if (songsXhr.status === 200) {
+            let songs = JSON.parse(this.responseText);
+            console.log(songs)
+            // let values = Object.values(songs);
+            displaySongs(songs)
+        }
+    };
+    songsXhr.send();
+}
 
+showSongsTable();
+function displayAlbums(albums){
+    console.log(albums)
+    albums.forEach(album=>{
+        let albumName = document.createElement('td');
+        let albumReleaseDate = document.createElement('td');
+        let albumArtist = document.createElement('td');
+        albumName.dataset.id = album.id_album;
+        albumName.innerText = album.name;
+        albumReleaseDate.innerText = album.release_date;
+        albumArtist.innerText = album.artist_name;
+        albumName.classList.add("album-name,text-center");
+        albumReleaseDate.classList.add("album-releaseDate,text-center");
+        albumArtist.classList.add("album-artist,text-center");
+        albumsTableBody.append(albumName,albumReleaseDate,albumArtist)
+    })
+}
+function showAlbumsTable(){
+    const albumXhr = new XMLHttpRequest();
+    albumXhr.open("GET","scripts.php?data=albums",true);
+    albumXhr.onload = function() {
+        if (albumXhr.status === 200) {
+            let albums = JSON.parse(this.responseText);
+            // console.log(albums)
+            // let values = Object.values(albums);
+            displayAlbums(albums);
+        }
+    };
+    albumXhr.send();
+}
+showAlbumsTable();
 // addAlbumBtn.addEventListener('click',function(){
 //     console.log(addAlbumBtn);
 //     const albumInfo = {}
@@ -360,3 +470,5 @@ document.addEventListener("click", function(event) {
 // })
 
 // SELECT song.* , artist.name as artist_name, album.name as album_name FROM `song` inner join album on album.id_album=song.album inner join artist on artist.id_artist=album.artist_id;
+
+// function dynamicSelect()

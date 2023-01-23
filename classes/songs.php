@@ -29,4 +29,16 @@ class Songs extends DatabaseConnection
             return false;
         }
     }
+
+    public static function showSongs(){
+        $db = new DatabaseConnection();
+        $pdo = $db->connect();
+        $sql = "SELECT song.* , artist.name AS artist_name, album.name AS album_name FROM `song` 
+        INNER JOIN album ON album.id_album = song.album 
+        INNER JOIN artist ON artist.id_artist=album.artist_id;";
+        $statement = $pdo->prepare($sql);
+        $statement->execute();
+        $res = $statement->fetchAll();
+        return $res;
+    }
 }
