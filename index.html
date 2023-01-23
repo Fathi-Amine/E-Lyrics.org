@@ -8,7 +8,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.min.css" rel="stylesheet" /> -->
     <link rel="stylesheet" href="./dist/output.css">
+    <!-- Begin Flowbite css -->
+    
+    <!-- End Flowbite css -->
     <title>Document</title>
 </head>
 <body>
@@ -58,8 +62,14 @@
         </aside>
         <main class="w-[calc(100%-3.73rem)] ml-auto">
             <div class="2xl:container mx-auto space-y-6">
-                <div class="h-16 border-b border-gray-300 dark:border-gray-700">
-                     
+                <div class="h-16 border-b p-2 border-gray-300 dark:border-gray-700">
+                    <div class="flex gap-2">
+                        <button class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Song</button>
+                        <button class="bg-indigo-500 text-white p-3 rounded-md hover:bg-indigo-600">Artists</button>
+                        <button class="bg-purple-500 text-white p-3 rounded-md hover:bg-purple-600">Albums</button>
+                        <button id="open-modal-btn" class="bg-gray-500 text-white p-3 rounded-md">Open Modal</button>
+                    </div>
+                    
                 </div>
                 <div class="px-6 lg:px-12">
                     <div class="h-96 flex justify-center items-center rounded-2xl border border-dashed border-gray-300/40 dark:border-gray-700">
@@ -68,9 +78,45 @@
                 </div>
                 
             </div>
-
         </main>
+        
+        <div id="modal" tabindex="-1" class="hidden bg-slate-900 absolute z-50 top-0 left-0 min-h-screen w-full flex items-center justify-center bg-opacity-75 p-3">
+            <div id="modal-content" class="bg-white rounded-lg p-8 w-[50%]">
+              <div class="text-lg font-medium">Add a song</div>
+              <div class="songFormBlock my-4">
+                <div class="song-inputs">
+                    <div class="form-title flex items-center justify-between">
+                        <h1>Add a song</h1>
+                        <a href="#" class="close-btn">
+                            <img class="w-3" src="assets/close.svg" alt="">
+                        </a>
+                    </div>
+                    <div class="input">
+                        <label for="titleInput" class="block">Title</label>
+                        <input type="text" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="titleInput">
+                    </div>
+                    <div class="input">
+                        <label for="" class="block">Artist</label>
+                        <input type="text" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="artistInput">
+                    </div>
+                    <div class="input">
+                        <label for="" class="block">Album</label>
+                        <input type="text" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="albumInput">
+                    </div>
+                    <div class="input">
+                        <label for="" class="block">Lyrics</label>
+                        <textarea class="slot w-full border border-gray-300 rounded-lg" id="lyricsText" cols="30" rows="4"></textarea>
+                    </div>
+                </div>
+              </div>
+              <div class="flex justify-end gap-2">
+                <button id="close-modal-btn" class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600">Close</button>
+                <button class="addSongBlock bg-purple-500 text-white p-2 rounded-lg hover:bg-purple-600">Add another song</button>
+              </div>
+            </div>
+          </div>
     </div>
+    
     <!-- <div class="albumBlock"></div>
     <div class="crud-album">
         <div class="input-container">
@@ -144,5 +190,52 @@
         <button type="button" class="btn">Add song</button>
         <button class="addSongBlock">Add another song</button>
     </div> -->
+    <!-- <div id="modal" class="hidden w-10">
+        <div id="modal-content">
+            <button id="close-modal-button" class="bg-gray-500 text-white p-3 rounded-md">Close</button>
+             Modal content here
+        </div>
+    </div> -->
+
+    <!-- <div id="modal" tabindex="-1" class="hidden bg-slate-900 absolute z-50 top-0 left-0 h-full w-full flex items-center justify-center bg-opacity-75">
+        <div id="modal-content" class="bg-white rounded-lg p-8 w-[50%] overflow-y-scroll">
+          <div class="text-lg font-medium">Add a song</div>
+          <div class="songFormBlock my-4">
+            <div class="song-inputs">
+                <div class="form-title flex items-center justify-between">
+                    <h1>Add a song</h1>
+                    <a href="#" class="close-btn">
+                        <img class="w-3" src="assets/close.svg" alt="">
+                    </a>
+                </div>
+                <div class="input">
+                    <label for="titleInput" class="block">Title</label>
+                    <input type="text" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="titleInput">
+                </div>
+                <div class="input">
+                    <label for="" class="block">Artist</label>
+                    <input type="text" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="artistInput">
+                </div>
+                <div class="input">
+                    <label for="" class="block">Album</label>
+                    <input type="text" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="albumInput">
+                </div>
+                <div class="input">
+                    <label for="" class="block">Lyrics</label>
+                    <textarea class="slot w-full border border-gray-300 rounded-lg" id="lyricsText" cols="30" rows="4"></textarea>
+                </div>
+            </div>
+          </div>
+          <div class="flex justify-end gap-2">
+            <button id="close-modal-btn" class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600">Close</button>
+            <button class="addSongBlock bg-purple-500 text-white p-2 rounded-lg hover:bg-purple-600">Add another song</button>
+          </div>
+        </div>
+      </div> -->
     <script src="draft.js"></script>
+    <script>
+      
+
+    </script>
+</body>
 </html>

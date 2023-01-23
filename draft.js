@@ -19,42 +19,87 @@ const albumBlock = document.querySelector('.albumBlock');
 var selectedOptionValue = 0;
 // const closeBtns = document.querySelectorAll('.close-btn');
 // console.log(closeBtns)
-const form = document.querySelector('.lyrics-form');
-// addBtn.addEventListener('click',(e)=>{
+let duplicateCount = 0;
+const formParent = 
+const form = document.querySelector('.song-inputs');
+
+function insertForm(){
+    duplicateCount++;
+    let insertedForm = form.;
+    insertedForm.id = "insertedForm"+duplicateCount;
+    form.appendChild(insertedForm);
+}
+
+
+addBtn.addEventListener('click',insertForm
+// {
 //     e.preventDefault();
 //     form.innerHTML += 
 //     `
 //     <div class="song-inputs">
-//         <div class="form-title">
+//         <div class="form-title flex items-center justify-between">
 //             <h1>Add a song</h1>
-//             <div class="close-btn" onclick="removeBlock(this)">
-//                 <img src="assets/close.svg" alt="">
-//             </div>
+//             <a href="#" class="close-btn">
+//                 <img class="w-3" src="assets/close.svg" alt="">
+//             </a>
 //         </div>
 //         <div class="input">
-//             <label for="">Title</label>
-//             <input type="text" class="slot" id="titleInput">
+//             <label for="titleInput" class="block">Title</label>
+//             <input type="text" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="titleInput">
 //         </div>
 //         <div class="input">
-//             <label for="">Artist</label>
-//             <input type="text" class="slot" id="artistInput">
+//             <label for="" class="block">Artist</label>
+//             <input type="text" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="artistInput">
 //         </div>
 //         <div class="input">
-//             <label for="">Album</label>
-//             <input type="text" class="slot" id="albumInput">
+//             <label for="" class="block">Album</label>
+//             <input type="text" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="albumInput">
 //         </div>
 //         <div class="input">
-//             <label for="">Release Date</label>
-//             <input type="text" class="slot" id="releaseInput">
-//         </div>
-//         <div class="input">
-//             <label for="">Release Date</label>
-//             <textarea class="slot" id="lyricsText" cols="30" rows="10"></textarea>
+//             <label for="" class="block">Lyrics</label>
+//             <textarea class="slot w-full border border-gray-300 rounded-lg" id="lyricsText" cols="30" rows="4"></textarea>
 //         </div>
 //     </div>
 // `
-// })
+// }
+)
 
+
+let modal = document.getElementById("modal");
+let openModalBtn = document.getElementById("open-modal-btn");
+let closeModalBtn = document.getElementById("close-modal-btn");
+let modalHidden = true;
+
+openModalBtn.addEventListener("click", function() {
+    if (modalHidden) {
+        modal.classList.remove("hidden");
+        modalHidden = false;
+    }
+});
+
+closeModalBtn.addEventListener("click", function() {
+    if (!modalHidden) {
+        modal.classList.add("hidden");
+        modalHidden = true;
+    }
+});
+
+// document.addEventListener("click", function(event) {
+//     if (!event.target.closest('#modal-content')) {
+//         if (!modalHidden) {
+//             modal.classList.add("hidden");
+//             modalHidden = true;
+//         }
+//     }
+// });
+document.addEventListener("click", function(event) {
+    if (event.target != openModalBtn && event.target != closeModalBtn) {
+        if (!event.target.closest('#modal-content') && !modalHidden) {
+            modal.classList.add("hidden");
+            modalHidden = true;
+        }
+    }
+});
 // function removeBlock(e){
 //     e.parentElement.parentElement.remove()
 // }
@@ -313,3 +358,5 @@ const form = document.querySelector('.lyrics-form');
 //     };
 //     albumXhr.send(`albumDeletion=${JSON.stringify(deleteAlbum)}`);
 // })
+
+// SELECT song.* , artist.name as artist_name, album.name as album_name FROM `song` inner join album on album.id_album=song.album inner join artist on artist.id_artist=album.artist_id;
