@@ -3,7 +3,7 @@ const addSongBtn = document.querySelector('.btn');
 const songsTableBody = document.querySelector('.songsTableBody');
 const albumsTableBody = document.querySelector('.albumsTableBody');
 const artistsTableBody = document.querySelector('.artistsTableBody');
-console.log(songsTableBody)
+console.log(artistsTableBody)
 const addArtistBtn = document.querySelector('.addArtist');
 const readArtistBtn = document.querySelector('.readArtist');
 const updateArtistBtn = document.querySelector('.updateArtist');
@@ -262,6 +262,7 @@ function custonSelectBox(){
         if (artistXhr.status === 200) {
             let artists = JSON.parse(this.responseText);
             let values = Object.values(artists);
+            showArtists(values);
             // const selectInput = document.createElement('select');
             const selectInput = document.querySelector('#selectArtist')
             const defaultOption = document.createElement('option');
@@ -398,22 +399,22 @@ function showArtists(artists) {
         artistName.dataset.id = artist.id_artist;
         artistName.innerText = artist.name;
         artistName.classList.add("artist-name,text-center");
-        artistsTableBody.append(artistName)
-
+        artistsTableBody.append(artistName);
     })
 }
-function showArtist(){
-    const artistXhr = new XMLHttpRequest();
-    artistXhr.open("GET","scripts.php?data=artist",true);
-    artistXhr.onload = function() {
-        if (artistXhr.status === 200) {
-            let artists = JSON.parse(this.responseText);
-            let values = Object.values(artists);
-            showArtists(values);
-        }
-    };
-    artistXhr.send();
-}
+// function showArtist(){
+//     const artistXhr = new XMLHttpRequest();
+//     artistXhr.open("GET","scripts.php?data=artist",true);
+//     artistXhr.onload = function() {
+//         if (artistXhr.status === 200) {
+//             let artists = JSON.parse(this.responseText);
+//             console.log(artists);
+//             // let values = Object.values(artists);
+//             // showArtists(values);
+//         }
+//     };
+//     artistXhr.send();
+// }
 // addAlbumBtn.addEventListener('click',function(){
 //     console.log(addAlbumBtn);
 //     const albumInfo = {}
