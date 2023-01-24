@@ -68,7 +68,8 @@
                         <button class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Song</button>
                         <button class="bg-indigo-500 text-white p-3 rounded-md hover:bg-indigo-600">Artists</button>
                         <button class="bg-purple-500 text-white p-3 rounded-md hover:bg-purple-600">Albums</button>
-                        <button id="open-modal-btn" class="bg-gray-500 text-white p-3 rounded-md">Open Modal</button>
+                        <button id="open-modal-btn" class="bg-gray-500 text-white p-3 rounded-md">Add Songs</button>
+                        <button id="artist-modal-btn" class="bg-yellow-100 text-black p-3 rounded-md">Add Artist</button>
                     </div>
                     
                 </div>
@@ -85,10 +86,10 @@
                                 <th>Lyrics</th>
                                 <th>Artist</th>
                                 <th>Album</th>
+                                <th>Operations</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr class="songsTableBody"></tr>
+                        <tbody class="songsTableBody">
                         </tbody>
                 </div>
 
@@ -99,10 +100,10 @@
                                 <th>Name</th>
                                 <th>Release Date</th>
                                 <th>Artist</th>
+                                <th>Operations</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr class="albumsTableBody"></tr>
+                        <tbody class="albumsTableBody">
                         </tbody>
                 </div>
 
@@ -111,10 +112,10 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
+                                <th>Operations</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr class="artistsTableBody"></tr>
+                        <tbody class="artistsTableBody">
                         </tbody>
                 </div>
             </div>
@@ -127,11 +128,11 @@
               <div class="text-lg font-medium">Add a song</div>
               <div class="songFormBlock my-4">
                 <div class="song-inputs">
-                    <div class="form-title flex items-center justify-between">
+                    <div class="form-title">
                         <h1>Add a song</h1>
-                        <a href="#" class="close-btn">
-                            <img class="w-3" src="assets/close.svg" alt="">
-                        </a>
+                    </div>
+                    <div class="input">
+                        <input type="hidden" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="idInput">
                     </div>
                     <div class="input">
                         <label for="titleInput" class="block">Title</label>
@@ -140,23 +141,50 @@
                     <div class="input">
                         <label for="selectArtist" class="block">Artist</label>
                         <!-- <input type="text" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="artistInput"> -->
-                        <select class="slot w-full border border-gray-300 rounded-lg h-10 p-2" id="selectArtist"></select>
+                        <select onchange="change(this.value,event)" class="slot w-full border border-gray-300 rounded-lg h-10 p-2" id="selectArtist"></select>
                     </div>
                     <div class="input">
                         <label for="" class="block">Album</label>
                         <!-- <input type="text" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="albumInput"> -->
-                        <select class="slot w-full border border-gray-300 rounded-lg h-10 p-2" id="selectAlbum"></select>
+                        <select class="slot w-full border border-gray-300 rounded-lg h-10 p-2" id="selectAlbum">
+                            <Option selected>Select An Album</Option>
+                        </select>
                     </div>
                     <div class="input">
                         <label for="" class="block">Lyrics</label>
                         <textarea class="slot w-full border border-gray-300 rounded-lg" id="lyricsText" cols="30" rows="4"></textarea>
                     </div>
+                    <div class="lyricsDisplay">
+                        <p class="completeLyrics"></p>
+                    </div>
                 </div>
               </div>
               <div class="flex justify-end gap-2">
-                <button id="close-modal-btn" class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600">Close</button>
+                <button id="close-modal-btn" class="bg-gray-500 text-white p-2 rounded-lg hover:bg-gray-600">Close</button>
                 <button class="addSongBlock bg-purple-500 text-white p-2 rounded-lg hover:bg-purple-600">Add another song</button>
+                <button class="addData bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600">Save</button>
+                <button class="updateSong bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600">Update</button>
+                <button class="deleteSong bg-red-500 text-white p-2 rounded-lg hover:bg-red-600">Delete</button>
               </div>
+            </div>
+          </div>
+          <div id="modalforArtist" class="hidden bg-slate-900 absolute z-50 top-0 left-0 min-h-screen w-full flex items-center justify-center bg-opacity-75 p-3">
+            <div id="modal-content" class="bg-white rounded-lg p-8 w-[50%]">
+                <div class="album-inputs">
+                    <div class="input">
+                        <input type="hidden" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="artistIdInput">
+                    </div>
+                    <div class="input my-2">
+                        <label for="nameInput" class="block">Artist Name</label>
+                        <input type="text" class="slot w-full border border-gray-300 rounded-lg h-8 p-2" id="artistInput">
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2">
+                    <button id="close-artistModal-btn" class="bg-gray-500 text-white p-2 rounded-lg hover:bg-gray-600">Close</button>
+                    <button class="addArtistBtn bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600">Save</button>
+                    <button class="updateArtist bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600">Update</button>
+                    <button class="deleteArtist bg-red-500 text-white p-2 rounded-lg hover:bg-red-600">Delete</button>
+                </div>
             </div>
           </div>
     </div>

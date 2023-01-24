@@ -2,16 +2,34 @@
 include_once("classes/songs.php");
 include_once("classes/artist.php");
 include_once("classes/album.php");
+
+
+
+
 if(isset($_GET["data"]) && $_GET['data'] == 'artist'){
+
     echo json_encode(getArtists());
+
 };
 if(isset($_GET["data"]) && $_GET['data'] == 'albums'){
+
     echo json_encode(getAlbums());
+
+};
+if(isset($_GET["data"]) && $_GET["data"] == 'specificAlbums'){
+
+    echo json_encode(getArtistAlbums($_GET["artist_id"]));
 };
 if(isset($_POST["songs"])){
     json_encode(response($_POST["songs"]));
 };
 
+if(isset($_POST["updateSong"])){
+    updateSong($_POST['updateSong']);
+}
+if(isset($_POST["deleteSong"])){
+    deleteSong($_POST["deleteSong"]);
+}
 if(isset($_POST["artist"])){
     json_encode(insertArtist($_POST["artist"]));
 };
@@ -52,7 +70,21 @@ function response($data){
     // // var_dump($row["title"]);
     // die();
 }
+function updateSong($data){
+    $songToUpdate = json_decode($data,true);
+    $id = $songToUpdate["id"];
+    $title = $songToUpdate["title"];
+    $lyrics = $songToUpdate["lyrics"];
+    Songs::updateSong($id,$title,$lyrics);
+}
 
+function deleteSong($id){
+    Songs::deleteSongs($id);
+}
+function getArtistAlbums($data){
+    $artistAlbums = new Album();
+    return $artistAlbums->readArtistAlbums($data);
+}
 function getSongs(){
     return Songs::showSongs();
 }

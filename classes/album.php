@@ -67,6 +67,17 @@ class Album extends DatabaseConnection
         return $res;
     }
 
+    public function readArtistAlbums($id){
+        $db = new DatabaseConnection();
+        $pdo = $db -> connect();
+        $sql = "SELECT * FROM album WHERE artist_id = :id";
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(':id', $id);
+        $statement->execute();
+        $res = $statement->fetchAll();
+        return $res;
+    }
+
     public function albumUp($data){
         $this->setAlbumId($data["id"]);
         $this->setAlbumName($data["name"]);
