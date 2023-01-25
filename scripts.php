@@ -48,6 +48,11 @@ if(isset($_POST["albumUpdate"])){
     json_encode(updateAlbum($_POST["albumUpdate"]));
 }
 
+if(isset($_POST["albumDeletion"])){
+    json_encode(deleteAlbum($_POST["albumDeletion"]));
+}
+
+
 if(isset($_GET["data"]) && $_GET['data'] == 'songs'){
     echo json_encode(getSongs());
 }
@@ -115,10 +120,10 @@ function deleteArtist($data){
 
 function addAlbum($data){
     $albumInfo = json_decode($data,true);
-    var_dump($albumInfo);
-    die();
-    // $album = new Album();
-    // $album->insertAlbum($albumInfo);
+    // var_dump($albumInfo);
+    // die();
+    $album = new Album();
+    $album->insertAlbum($albumInfo);
     // var_dump($data);
     // die();
 }

@@ -15,10 +15,10 @@ const deleteArtistBtn = document.querySelector('.deleteArtist');
 const readBlock = document.querySelector('.show');
 const artist = document.querySelector('#artistInput');
 const artistId = document.querySelector('#artistIdInput');
-const albumIdInput = document.querySelector('.albumId');
-const albumNameInput = document.querySelector('.albumName');
-const albumDateInput = document.querySelector('.albumDate');
-const albumArtistInput = document.querySelector('.selectBox');
+const albumIdInput = document.querySelector('#albumIdInput');
+const albumNameInput = document.querySelector('#albumNameInput');
+const albumDateInput = document.querySelector('#albumDateInput');
+const albumArtistInput = document.querySelector('#albumArtistSelect');
 const addAlbumBtn = document.querySelector('.addAlbumBtn');
 const showAlbumsBtn = document.querySelector('.showAlbumsBtn');
 const updateAlbumBtn = document.querySelector('.updateAlbumBtn');
@@ -32,14 +32,19 @@ const selectAlbumInput = document.querySelector('#selectAlbum');
 const lyricsInput = document.querySelector("#lyricsText")
 let modal = document.getElementById("modal");
 let artistModal = document.getElementById("modalforArtist");
+let albumModal = document.getElementById("modalforAlbum");
 let openModalBtn = document.getElementById("open-modal-btn");
 let openArtistModal = document.getElementById("artist-modal-btn");
+let openAlbumModal = document.getElementById("album-modal-btn");
 let closeModalBtn = document.getElementById("close-modal-btn");
 let closeArtistModalBtn = document.getElementById("close-artistModal-btn");
+let closeAlbumModalBtn = document.getElementById("close-albumModal-btn");
 
 let modalHidden = true;
 let artistModalHidden = true;
+let albumModalHidden = true;
 var selectedOptionValue = 0;
+let selectedArtistValue = 0;
 // const closeBtns = document.querySelectorAll('.close-btn');
 // console.log(closeBtns)
 let duplicateCount = 0;
@@ -112,6 +117,15 @@ openArtistModal.addEventListener('click',function(){
     deleteArtistBtn.style.display = 'none';
 })
 
+openAlbumModal.addEventListener('click',function(){
+    if (albumModalHidden) {
+        albumModal.classList.remove("hidden");
+        albumModalHidden = false;
+    }
+    updateAlbumBtn.style.display = 'none';
+    deleteAlbumBtn.style.display = 'none';
+})
+
 closeModalBtn.addEventListener("click", function() {
     if (!modalHidden) {
         modal.classList.add("hidden");
@@ -128,6 +142,12 @@ closeArtistModalBtn.addEventListener("click",function(){
     if (!artistModalHidden) {
         artistModal.classList.add("hidden");
         artistModalHidden = true;
+    }
+})
+closeAlbumModalBtn.addEventListener("click",function(){
+    if (!albumModalHidden) {
+        albumModal.classList.add("hidden");
+        albumModalHidden = true;
     }
 })
 
@@ -166,6 +186,27 @@ function editArtist(element){
     const rowText = artistRow.querySelector('.artist-name').innerText;
     artistId.value = rowId;
     artist.value = rowText;
+}
+
+function editAlbum(element){
+    console.log(element)
+    if (albumModalHidden) {
+        albumModal.classList.remove("hidden");
+        albumModalHidden = false;
+    }
+    addAlbumBtn.style.display = "none";
+    updateAlbumBtn.style.display= "block";
+    deleteAlbumBtn.style.display = "block";
+    const albumRow = element.parentElement.parentElement.parentElement;
+    albumIdInput.value = albumRow.querySelector(".album-name").dataset.id;
+    albumNameInput.value = albumRow.querySelector('.album-name').innerText;
+    albumDateInput.value = albumRow.querySelector(".album-releaseDate").innerText;
+    albumArtistInput.value = albumRow.querySelector('.album-artist').dataset.artistid
+    console.log(albumRow)
+    // const rowId = artistRow.querySelector('.artist-name').dataset.id;
+    // const rowText = artistRow.querySelector('.artist-name').innerText;
+    // artistId.value = rowId;
+    // artist.value = rowText;
 }
 
 function show(element){
@@ -517,17 +558,18 @@ function displayAlbums(albums){
         btnsCol.innerHTML = 
         `
         <div>
-            <button class="bg-red-500 text-white p-2 rounded-md hover:bg-red-600" onclick="edit(this)">Edit</button>
+            <button class="bg-red-500 text-white p-2 rounded-md hover:bg-red-600" onclick="editAlbum(this)">Edit</button>
             <button class="bg-green-500 text-white p-2 rounded-md hover:bg-green-600" onclick="show(this)">Show</button>
         </div>
         `
         albumName.dataset.id = album.id_album;
         albumName.innerText = album.name;
         albumReleaseDate.innerText = album.release_date;
+        albumArtist.dataset.artistid = album.artist_id
         albumArtist.innerText = album.artist_name;
-        albumName.classList.add("album-name,text-center");
-        albumReleaseDate.classList.add("album-releaseDate,text-center");
-        albumArtist.classList.add("album-artist,text-center");
+        albumName.classList.add("album-name","text-center");
+        albumReleaseDate.classList.add("album-releaseDate","text-center");
+        albumArtist.classList.add("album-artist","text-center");
         albumRow.append(albumName,albumReleaseDate,albumArtist,btnsCol);
         albumsTableBody.appendChild(albumRow)
     })
@@ -579,30 +621,57 @@ function showArtists(artists) {
 //     };
 //     artistXhr.send();
 // }
-// addAlbumBtn.addEventListener('click',function(){
-//     console.log(addAlbumBtn);
-//     const albumInfo = {}
-//     const albumName = albumNameInput.value;
-//     const albumDate = albumDateInput.value;
-//     albumInfo.name = albumName;
-//     albumInfo.date = albumDate;
-//     albumInfo.artistId = selectedOptionValue;
-//     console.log(selectedOptionValue)
-//     const albumXhr = new XMLHttpRequest();
-//     albumXhr.open("POST", "scripts.php",true);
-//     albumXhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-//     albumXhr.onreadystatechange = function () {
-//         if (albumXhr.readyState === 4 && albumXhr.status === 200) {
-//             console.log(albumXhr.responseText);
-//             // if(albumXhr.responseText){
-//             //     console.log("yeap")
-//             // }else{
-//             //     console.log("nope")
-//             // };
-//         }
-//     }
-//     albumXhr.send(`album=${JSON.stringify(albumInfo)}`);
-// })
+
+function customAlbumSelect(){
+    const artistXhr = new XMLHttpRequest();
+    artistXhr.open("GET","scripts.php?data=artist",true);
+    artistXhr.onload = function() {
+        if (artistXhr.status === 200) {
+            let artists = JSON.parse(this.responseText);
+            let values = Object.values(artists);
+            const defaultOption = document.createElement('option');
+            defaultOption.innerText = 'Select an Artist';
+            defaultOption.setAttribute('selected',"");
+            albumArtistInput.appendChild(defaultOption)
+            values.forEach(artist=>{
+                const selectOption = document.createElement('option');
+                selectOption.innerText = artist.name;
+                selectOption.setAttribute('value', `${artist.id_artist}`)
+                selectOption.classList = 'option';
+                albumArtistInput.appendChild(selectOption);
+                console.log(artist)
+            })
+            albumArtistInput.addEventListener('change',function(){
+                selectedArtistValue = albumArtistInput.value;
+            })
+        }
+    };
+    artistXhr.send();
+}
+customAlbumSelect()
+addAlbumBtn.addEventListener('click',function(){
+    console.log(addAlbumBtn);
+    const albumInfo = {}
+    const albumName = albumNameInput.value;
+    const albumDate = albumDateInput.value;
+    albumInfo.name = albumName;
+    albumInfo.date = albumDate;
+    albumInfo.artistId = selectedArtistValue;
+    const albumXhr = new XMLHttpRequest();
+    albumXhr.open("POST", "scripts.php",true);
+    albumXhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+    albumXhr.onreadystatechange = function () {
+        if (albumXhr.readyState === 4 && albumXhr.status === 200) {
+            console.log(albumXhr.responseText);
+            // if(albumXhr.responseText){
+            //     console.log("yeap")
+            // }else{
+            //     console.log("nope")
+            // };
+        }
+    }
+    albumXhr.send(`album=${JSON.stringify(albumInfo)}`);
+})
 
 // showAlbumsBtn.addEventListener('click',function(){
 //     console.log(showAlbumsBtn)
@@ -619,44 +688,44 @@ function showArtists(artists) {
 //     albumXhr.send();
 // })
 
-// updateAlbumBtn.addEventListener('click',function(){
-//     const albumUpdate = {}
-//     const albumName = albumNameInput.value;
-//     const albumDate = albumDateInput.value;
-//     albumUpdate.id = albumIdInput.value
-//     albumUpdate.name = albumName;
-//     albumUpdate.date = albumDate;
-//     albumUpdate.artistId = albumArtistInput.querySelector('select').value;
-//     console.log(albumUpdate)
-//     const albumXhr = new XMLHttpRequest();
-//     albumXhr.open("POST", "scripts.php",true);
-//     albumXhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-//     albumXhr.onreadystatechange = function () {
-//         if (albumXhr.readyState === 4 && albumXhr.status === 200) {
-//             console.log(albumXhr.responseText);
-//             // if(albumXhr.responseText){
-//             //     console.log("yeap")
-//             // }else{
-//             //     console.log("nope")
-//             // };
-//         }
-//     }
-//     albumXhr.send(`albumUpdate=${JSON.stringify(albumUpdate)}`);
-// })
+updateAlbumBtn.addEventListener('click',function(){
+    const albumUpdate = {}
+    const albumName = albumNameInput.value;
+    const albumDate = albumDateInput.value;
+    albumUpdate.id = albumIdInput.value
+    albumUpdate.name = albumName;
+    albumUpdate.date = albumDate;
+    albumUpdate.artistId = albumArtistInput.value;
+    console.log(albumUpdate)
+    const albumXhr = new XMLHttpRequest();
+    albumXhr.open("POST", "scripts.php",true);
+    albumXhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+    albumXhr.onreadystatechange = function () {
+        if (albumXhr.readyState === 4 && albumXhr.status === 200) {
+            console.log(albumXhr.responseText);
+            // if(albumXhr.responseText){
+            //     console.log("yeap")
+            // }else{
+            //     console.log("nope")
+            // };
+        }
+    }
+    albumXhr.send(`albumUpdate=${JSON.stringify(albumUpdate)}`);
+})
 
-// deleteAlbumBtn.addEventListener('click', function(){
-//     const deleteAlbum = {};
-//     deleteAlbum.id = albumIdInput.value;
-//     const albumXhr = new XMLHttpRequest();
-//     albumXhr.open("POST","scripts.php",true);
-//     albumXhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-//     albumXhr.onreadystatechange = function() {
-//         if (albumXhr.readyState === 4 && albumXhr.status === 200) {
-//             console.log(this.responseText);
-//         }
-//     };
-//     albumXhr.send(`albumDeletion=${JSON.stringify(deleteAlbum)}`);
-// })
+deleteAlbumBtn.addEventListener('click', function(){
+    const deleteAlbum = {};
+    deleteAlbum.id = albumIdInput.value;
+    const albumXhr = new XMLHttpRequest();
+    albumXhr.open("POST","scripts.php",true);
+    albumXhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+    albumXhr.onreadystatechange = function() {
+        if (albumXhr.readyState === 4 && albumXhr.status === 200) {
+            console.log(this.responseText);
+        }
+    };
+    albumXhr.send(`albumDeletion=${JSON.stringify(deleteAlbum)}`);
+})
 
 // SELECT song.* , artist.name as artist_name, album.name as album_name FROM `song` inner join album on album.id_album=song.album inner join artist on artist.id_artist=album.artist_id;
 
